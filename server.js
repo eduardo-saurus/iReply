@@ -12,6 +12,10 @@ app.get('/', (req, res) => {
   res.send('Hello World');
 });
 
+app.get('/status', (req, res) => {
+  res.json({ status: "active", message: "Operational" });
+});
+
 app.listen(port, () => {
   console.log(`Server listening on http://localhost:${port}`);
 });
