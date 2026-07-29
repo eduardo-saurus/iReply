@@ -1,21 +1,49 @@
 const express = require('express');
+
 const app = express();
-const port = 3000;
+const PORT = 3000;
+
+app.use(express.json());
+
+const sensorData = [];
 
 app.get('/', (req, res) => {
-  res.send('Hello World');
+    res.send('Hello World');
 });
 
 app.get('/status', (req, res) => {
-  res.json({ status: "active", message: "Operational" });
+    res.json({
+        status: 'active',
+        message: 'Operational'
+    });
 });
 
 app.get('/device/:name', (req, res) => {
-  const deviceName = req.params.name;
-  res.send(`Information for device: ${deviceName}`);
+    const { name } = req.params;
+
+    res.json({
+        device: name,
+        message: `Information for device: ${name}`
+    });
 });
 
-app.listen(port, () => {
-  console.log(`Server listening on http://localhost:${port}`);
+app.post('/device/sensor1/data', (req, res) => {
+    const reading = req.body;
+
+    sensorData.push(reading);
+
+    res.status(201).json({
+        totalReadings: sensorData.length,
+        data: reading
+    });
 });
 
+app.get('/device/sensor1/data', (req, res) => {
+    res.json({
+        totalReadings: sensorData.length,
+        data: sensorData
+    });
+});
+
+app.listen(PORT, () => {
+});
