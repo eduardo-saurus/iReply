@@ -10,6 +10,11 @@ app.get('/status', (req, res) => {
   res.json({ status: "active", message: "Operational" });
 });
 
+app.get('/device/:name', (req, res) => {
+  const deviceName = req.params.name;
+  res.send(`Information for device: ${deviceName}`);
+});
+
 app.listen(port, () => {
   console.log(`Server listening on http://localhost:${port}`);
 });
